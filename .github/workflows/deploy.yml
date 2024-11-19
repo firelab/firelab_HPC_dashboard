@@ -27,9 +27,6 @@ jobs:
     - name: Build the project
       run: npm run build
 
-    - name: Export the project
-      run: npm run export
-
     # Step 4: Set up SSH and deploy to Apache server
     - name: Deploy to Apache server
       uses: appleboy/scp-action@v0.1.1
