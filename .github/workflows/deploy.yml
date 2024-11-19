@@ -1,0 +1,41 @@
+name: Deploy Frontend to Apache Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    # Step 3: Install dependencies and build
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build the project
+      run: npm run build
+
+    - name: Export the project
+      run: npm run export
+
+    # Step 4: Set up SSH and deploy to Apache server
+    - name: Deploy to Apache server
+      uses: appleboy/scp-action@v0.1.1
+      with:
+        host: ninjastorm.firelab.org
+        username: gunjan
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: ./out/
+        target: /var/www/html/hpc_dashboard
