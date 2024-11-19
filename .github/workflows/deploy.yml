@@ -27,12 +27,16 @@ jobs:
     - name: Build the project
       run: npm run build
 
-    # Step 4: Set up SSH and deploy to Apache server
+    # Step 4: Deploy to Apache server using scp with SSH key
     - name: Deploy to Apache server
-      uses: appleboy/scp-action@v0.1.1
-      with:
-        host: ninjastorm.firelab.org
-        username: gunjan
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        source: ./out/
-        target: /var/www/html/hpc_dashboard
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        # Configure SSH key
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        # Add host to known_hosts to avoid interactive prompt
+        ssh-keyscan -H ninjastorm.firelab.org >> ~/.ssh/known_hosts
+        # Use scp to transfer files
+        scp -i ~/.ssh/id_rsa -r ./out/* gunjan@ninjastorm.firelab.org:/var/www/html/hpc_dashboard
