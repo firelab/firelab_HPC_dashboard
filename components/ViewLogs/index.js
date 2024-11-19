@@ -9,7 +9,7 @@ export default function ViewLogs() {
     if (!jobId) return; // Skip if jobId is not set
 
     const eventSource = new EventSource(
-      `https://ninjastorm.firelab.org/api/get-log/${jobId}`
+      `https://ninjastorm.firelab.org/hpc_dashboard/api/get-log/${jobId}`
     );
 
     eventSource.onmessage = (event) => {
