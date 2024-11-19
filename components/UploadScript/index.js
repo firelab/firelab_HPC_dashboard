@@ -21,7 +21,7 @@ export default function UploadScript() {
 
     try {
       const response = await axios.post(
-        "https://ninjastorm.firelab.org/upload-sbatch",
+        "https://ninjastorm.firelab.org/api/upload-sbatch",
         formData,
         {
           headers: {
