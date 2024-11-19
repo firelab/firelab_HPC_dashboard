@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import JobTable from "../components/JobTable";
-import ActionCards from "../components/ActionCards";
+import ViewLogs from "../components/ViewLogs";
+import UploadScript from "../components/UploadScript";
 
 export default function Home() {
-
   return (
     <div
       style={{
@@ -23,8 +22,13 @@ export default function Home() {
       <Header />
 
       <main style={{ flex: "1", padding: "2rem" }}>
-        <ActionCards />
-        <JobTable />
+        <div style={{ marginTop: "2rem" }}>
+          <UploadScript />
+        </div>
+
+        <div style={{ marginTop: "3rem" }}>
+          <ViewLogs />
+        </div>
       </main>
 
       <Footer />
