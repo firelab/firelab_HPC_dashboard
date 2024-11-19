@@ -11,10 +11,7 @@ export default function Header() {
   };
 
   const menuItems = [
-    { text: 'Home', href: '/' },
-    { text: 'Upload Job', href: '/upload' },
-    { text: 'Logs', href: '/logs' },
-    { text: 'Monitoring', href: process.env.NEXT_PUBLIC_SLURM_WEB_URL },
+    { text: 'Slurm Web Dashboard', href: process.env.NEXT_PUBLIC_SLURM_WEB_URL },
   ];
 
   return (
@@ -42,7 +39,7 @@ export default function Header() {
               color="inherit"
               component={Link}
               href={item.href}
-              target={item.text === 'Monitoring' ? '_blank' : '_self'}
+              target={item.text === 'Slurm Web Dashboard' ? '_blank' : '_self'}
               sx={{ mx: 1 }}
             >
               {item.text}
@@ -59,7 +56,7 @@ export default function Header() {
                 key={item.text}
                 component={Link}
                 href={item.href}
-                target={item.text === 'Monitoring' ? '_blank' : '_self'} // Open Monitoring in a new tab
+                target={item.text === 'Slurm Web Dashboard' ? '_blank' : '_self'}
               >
                 <ListItemText primary={item.text} />
               </ListItem>
