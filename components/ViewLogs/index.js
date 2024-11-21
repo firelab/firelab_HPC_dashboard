@@ -8,8 +8,9 @@ export default function ViewLogs() {
   useEffect(() => {
     if (!jobId) return; // Skip if jobId is not set
 
+    // Use localhost address for direct API call
     const eventSource = new EventSource(
-      `https://ninjastorm.firelab.org/hpc_dashboard/api/get-log/${jobId}`
+      `http://127.0.0.1:5001/hpc_dashboard/api/get-log/${jobId}`
     );
 
     eventSource.onmessage = (event) => {
