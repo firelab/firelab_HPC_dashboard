@@ -10,7 +10,7 @@ export default function ViewLogs() {
 
     // Use localhost address for direct API call
     const eventSource = new EventSource(
-      `http://127.0.0.1:5001/hpc_dashboard/api/get-log/${jobId}`
+      `https://ninjastorm.firelab.org/hpc_dashboard/api/get-log/${jobId}`
     );
 
     eventSource.onmessage = (event) => {
