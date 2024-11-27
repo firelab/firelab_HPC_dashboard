@@ -15,11 +15,6 @@ LOCAL_LOGS_DIR = "/home/gunjan/logs"
 REMOTE_SCRIPTS_DIR = "/home/web/sbatch_scripts"
 REMOTE_LOGS_DIR = "/home/web/logs"
 
-# Ensure directories exist
-os.makedirs(SBATCH_SCRIPTS_DIR, exist_ok=True)
-os.makedirs(LOGS_DIR, exist_ok=True)
-
-
 @app.route("/hpc_dashboard/api/upload-sbatch", methods=["POST"])
 def upload_sbatch():
     app.logger.info("Received request to upload sbatch script.")
