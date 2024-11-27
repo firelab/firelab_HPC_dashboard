@@ -49,6 +49,9 @@ jobs:
         # Restart Gunicorn service
         ssh -i ~/.ssh/id_rsa gunjan@ninjastorm.firelab.org << 'EOF'
         echo "Restarting hpc_dashboard Gunicorn service..."
-        sudo systemctl restart hpc_dashboard
-        echo "Gunicorn service restarted successfully."
-        EOF
+        if sudo systemctl restart hpc_dashboard; then
+            echo "Gunicorn service restarted successfully."
+        else
+            echo "Failed to restart Gunicorn service." >&2
+            exit 1
+        fi
