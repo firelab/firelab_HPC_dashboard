@@ -27,8 +27,8 @@ jobs:
     - name: Build the project
       run: npm run build
 
-    # Step 4: Deploy to Apache server using scp with SSH key
-    - name: Deploy to Apache server
+    # Step 4: Deploy to Apache server and restart Gunicorn using scp with SSH key
+    - name: Deploy to Apache server and restart Gunicorn
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
@@ -36,7 +36,19 @@ jobs:
         mkdir -p ~/.ssh
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
+        
         # Add host to known_hosts to avoid interactive prompt
         ssh-keyscan -H ninjastorm.firelab.org >> ~/.ssh/known_hosts
-        # Use scp to transfer files
+        
+        # Use scp to transfer files for the front-end
         scp -i ~/.ssh/id_rsa -r ./out/* gunjan@ninjastorm.firelab.org:/var/www/html/hpc_dashboard
+        
+        # Transfer app.py to the server
+        scp -i ~/.ssh/id_rsa server/app.py gunjan@ninjastorm.firelab.org:/home/gunjan/app.py
+        
+        # Restart Gunicorn service
+        ssh -i ~/.ssh/id_rsa gunjan@ninjastorm.firelab.org << 'EOF'
+        echo "Restarting hpc_dashboard Gunicorn service..."
+        sudo systemctl restart hpc_dashboard
+        echo "Gunicorn service restarted successfully."
+        EOF
